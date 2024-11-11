@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends 'Navbar/ProjectNavBar.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+{% block body %}
+    <div class="container mt-5">
+        <h1>Contact Manager</h1>
+
+        <!-- Search Bar -->
+        <form method="GET" class="form-inline mb-4">
+            <input type="text" name="q" class="form-control" placeholder="Search by name or email" value="{{ query }}">
+            <button type="submit" class="btn btn-primary ml-2">Search</button>
+        </form>
+
+        <!-- Contact Form -->
+        <div class="card mb-4">
+            <div class="card-header">Add Contact</div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Save Contact</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact List -->
+        <h2>Contact List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone_number }}</td>
+                    <td>{{ contact.address }}</td>
+                    <td>
+                        <a href="{% url 'contact_delete' contact.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No contacts found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>

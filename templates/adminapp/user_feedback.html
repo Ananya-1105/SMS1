@@ -1,0 +1,20 @@
+{% extends 'NavBar/ProjectNavBar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block body %}
+    <title>User Feedback Form</title>
+</head>
+<body>
+
+    <h1>User Feedback Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+</body>
+</html>
